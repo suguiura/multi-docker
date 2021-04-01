@@ -1,0 +1,20 @@
+sudo: required
+services:
+    - docker
+
+before_install:
+    - docker build -t suguiura/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+    - docker run -e CI=true suguiura/react-test yarn test
+
+after_success:
+    - docker build -t suguiura/multi-client ./client
+    - docker build -t suguiura/multi-nginx ./nginx
+    - docker build -t suguiura/multi-server ./server
+    - docker build -t suguiura/multi-worker ./worker
+    - echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_ID}" --password-stdin
+    - docker push suguiura/multi-client
+    - docker push suguiura/multi-nginx
+    - docker push suguiura/multi-server
+    - docker push suguiura/multi-worker

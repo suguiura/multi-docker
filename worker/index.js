@@ -13,11 +13,14 @@ function fib (index) {
     if (index < 2) {
         return 1;
     }
-    array = [1, 1];
+    let previous = 1;
+    let result = 1;
     for (i = 2; i <= index; i++) {
-        array[i] = array[i - 1] + array[i - 2];
+        const current = result;
+        result = current + previous;
+        previous = current;
     }
-    return array[index];
+    return result;
 }
 
 sub.on('message', (channel, message) => {

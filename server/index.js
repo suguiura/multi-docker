@@ -58,10 +58,6 @@ app.get('/values/current', async (req, res) => {
 app.post('/values/input', async (req, res) => {
     const index = req.body.index;
 
-    // if (index > 40) {
-    //     return res.status(422).send('Index too high');
-    // }
-
     redisClient.hset('values', index, 'Nothing yet!');
     redisPublisher.publish('insert', index);
     pool.query('insert into indexed_values(number) values ($1)', [index]);

@@ -1,0 +1,29 @@
+{
+    "AWSEBDockerrunVersion": 2,
+    "containerDefinitions": [
+        {
+            "name": "client",
+            "image": "suguiura/multi-client",
+            "hostname": "client",
+            "essential": false
+        },
+        {
+            "name": "server",
+            "image": "suguiura/multi-server",
+            "hostname": "api",
+            "essential": false
+        },
+        {
+            "name": "worker",
+            "image": "suguiura/multi-worker",
+            "essential": false
+        },
+        {
+            "name": "nginx",
+            "image": "suguiura/multi-nginx",
+            "essential": true,
+            "portMappings": [ {"hostPort": 80, "containerPort": 80} ],
+            "links": ["server", "client"]
+        }
+    ]
+}

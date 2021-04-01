@@ -21,13 +21,13 @@ const pool = new Pool({
 console.log('connecting');
 pool.connect((err, client, release) => {
     if (err) {
-        console.err(err);
+        console.error(err);
     }
     console.log('creating table');
     client
         .query('CREATE TABLE IF NOT EXISTS indexed_values (number INT)')
         .then(result => console.log('create table done'))
-        .catch((err) => console.err(err));
+        .catch((err) => console.error(err));
 });
 
 const redis = require('redis');
